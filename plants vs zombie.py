@@ -12,11 +12,14 @@ pygame.display.set_caption("Plants vs zombie")
 
 
 #img bg
-bg = pygame.image.load('imag/bg.png')
+bg = pygame.image.load('comand work/imag/bg.png')
 bg = pygame.transform.scale(bg, (1920, 1080))
 
 #plants
-
+p1 = pygame.image.load('comand work/imag/images/растения/p1.gif')
+p2 = pygame.image.load('comand work/imag/images/растения/p2.gif')
+potato = pygame.image.load('comand work/imag/images/растения/potato.gif')
+sunflower = pygame.image.load('comand work/imag/images/растения/sunfl.gif')
 
 # число кадров в секунду
 FPS = 60
