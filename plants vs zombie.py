@@ -21,9 +21,20 @@ p2 = pygame.image.load('comand work/imag/images/растения/p2.gif')
 potato = pygame.image.load('comand work/imag/images/растения/potato.gif')
 sunflower = pygame.image.load('comand work/imag/images/растения/sunfl.gif')
 
+
+#card
+p1c = pygame.image.load('comand work/imag/images/карты растений/p1c.png')
+p2c = pygame.image.load('comand work/imag/images/карты растений/p2c.png')
+potatoc =pygame.image.load('comand work/imag/images/карты растений/pc.png')
+sunflowerc = pygame.image.load('comand work/imag/images/карты растений/pc.png')
+
+
+
 # число кадров в секунду
 FPS = 60
 clock = pygame.time.Clock()
+
+
 
 while 1:
     # проверяем события, которые произошли (если они были)
