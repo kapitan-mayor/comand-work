@@ -12,21 +12,21 @@ pygame.display.set_caption("Plants vs zombie")
 
 
 #img bg
-bg = pygame.image.load('comand work/imag/bg.png')
+bg = pygame.image.load('command work/imag/bg.png')
 bg = pygame.transform.scale(bg, (1920, 1080))
 
 #plants
-p1 = pygame.image.load('comand work/imag/images/растения/p1.gif')
-p2 = pygame.image.load('comand work/imag/images/растения/p2.gif')
-potato = pygame.image.load('comand work/imag/images/растения/potato.gif')
-sunflower = pygame.image.load('comand work/imag/images/растения/sunfl.gif')
+p1 = pygame.image.load('command work/imag/images/растения/p1.gif')
+p2 = pygame.image.load('command work/imag/images/растения/p2.gif')
+potato = pygame.image.load('command work/imag/images/растения/potato.gif')
+sunflower = pygame.image.load('command work/imag/images/растения/sunfl.gif')
 
 
 #card
-p1c = pygame.image.load('comand work/imag/images/карты растений/p1c.png')
-p2c = pygame.image.load('comand work/imag/images/карты растений/p2c.png')
-potatoc =pygame.image.load('comand work/imag/images/карты растений/pc.png')
-sunflowerc = pygame.image.load('comand work/imag/images/карты растений/pc.png')
+p1c = pygame.image.load('command work/imag/images/карты растений/p1c.png')
+p2c = pygame.image.load('command work/imag/images/карты растений/p2c.png')
+potatoc =pygame.image.load('command work/imag/images/карты растений/pc.png')
+sunflowerc = pygame.image.load('command work/imag/images/карты растений/pc.png')
 
 
 
