@@ -83,6 +83,8 @@ sunflowerc.set_alpha(100)
 cherrycard.set_alpha(100)
 jalapenocard.set_alpha(100)
 
+alpha_cards = [p1c, p2c, potatoc, sunflowerc, cherrycard, jalapenocard]
+
 p1crect = p1c.get_rect()
 p2crect = p2c.get_rect(topleft = (0, 100))
 potatocrect = potatoc.get_rect(topleft = (0, 200))
