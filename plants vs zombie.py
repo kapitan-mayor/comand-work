@@ -1,5 +1,10 @@
+import os
+from PIL import Image
+import glob
 import pygame, sys
 import random
+import time
+import threading
 pygame.init()
 
 # цвета
@@ -7,6 +12,7 @@ BLACK = (0, 0, 0)
 changeX = 0
 changeY = 0
 SPEED = 1
+count_sun = 0
 
 # настройки главного экрана
 WIDTH = 1920
@@ -29,8 +35,10 @@ gaz = pygame.transform.scale(gaz, (150, 150))
 gazup = pygame.transform.scale(gazup, (150, 150))
 
 #rect
+sunmass = []
 sunrect = sun.get_rect()
-count_sun = 0
+sunmass.append(sunrect)
+start_ticks=pygame.time.get_ticks()
 
 #img bg
 bg = pygame.image.load('command work/imag/bg.png')
@@ -70,6 +78,8 @@ sunflowerc.set_alpha(100)
 cherrycard.set_alpha(100)
 jalapenocard.set_alpha(100)
 
+alpha_cards = [p1c, p2c, potatoc, sunflowerc, cherrycard, jalapenocard]
+
 p1crect = p1c.get_rect()
 p2crect = p2c.get_rect(topleft = (0, 100))
 potatocrect = potatoc.get_rect(topleft = (0, 200))
@@ -88,51 +98,77 @@ cards = [
 
 #score
 score = 0
-f = pygame.font.SysFont('arial', 56)
+q = pygame.font.SysFont('arial', 56)
 
 # число кадров в секунду
 FPS = 60
 clock = pygame.time.Clock()
+runnig = True
+counter = 10
+  
+# custom user event to change color
+SPAWN_SUN = pygame.USEREVENT + 1
+print('SPAWN_SUN', SPAWN_SUN)
+
+pygame.time.set_timer(SPAWN_SUN, 10000)
+
+shop = []
 
 
-
-while 1:
+while runnig:
     # проверяем события, которые произошли (если они были)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
+    events = pygame.event.get()
+    for event in events:
+        if event.type == pygame.QUIT:
             sys.exit()
-
-    
-    
+        if event.type == SPAWN_SUN:
+            print('start sun event')
+            while count_sun != 1:
+                sunrect.centerx = random.randint(100, WIDTH)
+                sunrect.centery = random.randint(0, 100)
+                count_sun += 1 
+                pygame.time.set_timer(SPAWN_SUN, 0)    
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                print("escape pressed")
+                pygame.quit()
+                running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                print(sunrect.collidepoint(event.pos), 'gotcha or not')
+                if sunrect.collidepoint(event.pos) == True:    
+                    score += 50
+                    count_sun = 0
+                    pygame.time.set_timer(SPAWN_SUN, 10000)
+    print(shop)
     mainScreen.fill(BLACK)
-
     mainScreen.blit(bg, (0, 0))
 
-    while count_sun != 1:
-        sunrect.centerx = random.randint(100, WIDTH)
-        sunrect.centery = random.randint(0, 100)
-        count_sun += 1 
-       
     if count_sun == 1:
+        print('start blit sun')
         if sunrect.bottom >= HEIGHT:
             sunrect.bottom = HEIGHT
         else:
             changeY += 0.01 * SPEED     
-            sunrect.y += changeY      
-        
-        mainScreen.blit(sun, sunrect)
-            
-        
-    #bg and card
-    
-    
+            sunrect.y += changeY 
 
+        mainScreen.blit(sun, sunrect)
+
+    if score >= 50:
+        if score == 200:
+            for i in alpha_cards:
+                alpha_cards[i] = alpha_cards[i].set_alpha(255)
+
+
+    clock.tick(60)
+
+    #card
     for card in cards:
         mainScreen.blit(card[0], card[1])
 
-
-    sc_text = f.render('Счёт: ' + str(score), 1, BLACK)
-    mainScreen.blit(sc_text, (1740, 0))   
+    #score
+    sc_text = q.render('Счёт: ' + str(score), 1, BLACK)
+    mainScreen.blit(sc_text, (1600, 0))   
     
     
     pygame.display.flip()
