@@ -6,6 +6,7 @@ import random
 import time
 pygame.init()
 
+
 # цвета
 BLACK = (0, 0, 0)
 changeX = 0
