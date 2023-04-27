@@ -54,6 +54,11 @@ p2 = pygame.transform.scale(p1, (130, 160))
 potato = pygame.transform.scale(p1, (130, 160))
 sunflower = pygame.transform.scale(p1, (130, 160))
 
+p1rect = p1.get_rect()
+p2rect = p2.get_rect()
+potatorect = potato.get_rect()
+sunflowerrect = sunflower.get_rect()
+
 #card
 p1c = pygame.image.load('command work/imag/images/карты растений/p1c.png')
 p2c = pygame.image.load('command work/imag/images/карты растений/p2c.png')
@@ -78,8 +83,6 @@ sunflowerc.set_alpha(100)
 cherrycard.set_alpha(100)
 jalapenocard.set_alpha(100)
 
-alpha_cards = [p1c, p2c, potatoc, sunflowerc, cherrycard, jalapenocard]
-
 p1crect = p1c.get_rect()
 p2crect = p2c.get_rect(topleft = (0, 100))
 potatocrect = potatoc.get_rect(topleft = (0, 200))
@@ -87,13 +90,13 @@ sunflowercrect = sunflowerc.get_rect(topleft = (0, 300))
 cherrycardrect = cherrycard.get_rect(topleft = (0, 400))
 jalapenocardrect = jalapenocard.get_rect(topleft = (0, 500))
 
-cards = [
-    [ p1c, p1crect ],
-    [ p2c, p2crect ],
-    [ potatoc, potatocrect ],
-    [ sunflowerc, sunflowercrect ],
-    [ cherrycard, cherrycardrect ],
-    [ jalapenocard, jalapenocardrect ],
+alpha_cards = [
+    { 'card': p1c, 'rect': p1crect, 'cost': 100 }, 
+    { 'card': p2c, 'rect': p2crect, 'cost': 200 }, 
+    { 'card': potatoc, 'rect': potatocrect, 'cost': 50 }, 
+    { 'card': sunflowerc, 'rect': sunflowercrect, 'cost': 50 }, 
+    { 'card': cherrycard, 'rect': cherrycardrect, 'cost': 150 }, 
+    { 'card': jalapenocard, 'rect': jalapenocardrect, 'cost': 125 }
 ]
 
 #score
@@ -154,17 +157,28 @@ while runnig:
 
         mainScreen.blit(sun, sunrect)
 
-    if score >= 50:
-        if score == 200:
-            for i in alpha_cards:
-                alpha_cards[i] = alpha_cards[i].set_alpha(255)
+
+        
+
+    # if score >= 50:
+    #     if score >= 200:
+    #         for i in alpha_cards:
+    #             alpha_cards[i] = alpha_cards[i].set_alpha(255)
 
 
     clock.tick(60)
 
     #card
-    for card in cards:
-        mainScreen.blit(card[0], card[1])
+    for card in alpha_cards:
+        if score >= card['cost']:
+            card['card'].set_alpha(255)
+        else:
+            card['card'].set_alpha(100)
+        if card['rect'].collidepoint(event.pos) == True and score >= card['cost']:
+            mainScreen.blit(card['card'], card['rect'].set_alpha(100))
+
+
+        mainScreen.blit(card['card'], card['rect'])
 
     #score
     sc_text = q.render('Счёт: ' + str(score), 1, BLACK)
