@@ -7,6 +7,7 @@ import time
 import threading
 pygame.init()
 
+
 # цвета
 BLACK = (0, 0, 0)
 changeX = 0
