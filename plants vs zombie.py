@@ -13,7 +13,9 @@ BLACK = (0, 0, 0)
 changeX = 0
 changeY = 0
 SPEED = 1
+SPEEDz = 1
 count_sun = 0
+count_z = 0
 
 # настройки главного экрана
 WIDTH = 1920
@@ -21,12 +23,38 @@ HEIGHT = 1080
 mainScreen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 pygame.display.set_caption("Plants vs zombie")
 
+
+zimages=[]
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/3.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/4.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/5.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/6.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/7.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/8.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/9.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/10.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/11.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/12.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/13.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/14.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/15.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/16.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/17.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/18.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/19.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/20.png'))
+zimages.append(pygame.image.load('imag/images/визуальные эффекты/21.png'))
+
+zombieindex = 0 # кадр который рисуется из анимации (zimages)
+zombie = zimages[zombieindex]
+zombierect = zombie.get_rect()
+
 #visual effects
-sun = pygame.image.load('command work/imag/images/визуальные эффекты/sun.png')
-fire = pygame.image.load('command work/imag/images/визуальные эффекты/jalapenoFire.gif')
-pea = pygame.image.load('command work/imag/images/визуальные эффекты/pea.png')
-gaz = pygame.image.load('command work/imag/images/визуальные эффекты/gaz.gif')
-gazup = pygame.image.load('command work/imag/images/визуальные эффекты/gazup.gif')
+sun = pygame.image.load('imag/images/визуальные эффекты/sun.png')
+fire = pygame.image.load('imag/images/визуальные эффекты/jalapenoFire.gif')
+pea = pygame.image.load('imag/images/визуальные эффекты/pea.png')
+gaz = pygame.image.load('imag/images/визуальные эффекты/gaz.gif')
+gazup = pygame.image.load('imag/images/визуальные эффекты/gazup.gif')
 
 #size
 sun = pygame.transform.scale(sun, (150, 150))
@@ -42,14 +70,14 @@ sunmass.append(sunrect)
 start_ticks=pygame.time.get_ticks()
 
 #img bg
-bg = pygame.image.load('command work/imag/bg.png')
+bg = pygame.image.load('imag/images/bg.png')
 bg = pygame.transform.scale(bg, (1920, 1080))
 
 #plants
-p1 = pygame.image.load('command work/imag/images/растения/p1.gif')
-p2 = pygame.image.load('command work/imag/images/растения/p2.gif')
-potato = pygame.image.load('command work/imag/images/растения/potato.gif')
-sunflower = pygame.image.load('command work/imag/images/растения/sunfl.gif')
+p1 = pygame.image.load('imag/images/растения/p1.gif')
+p2 = pygame.image.load('imag/images/растения/p2.gif')
+potato = pygame.image.load('imag/images/растения/potato.gif')
+sunflower = pygame.image.load('imag/images/растения/sunfl.gif')
 p1 = pygame.transform.scale(p1, (130, 160))
 p2 = pygame.transform.scale(p1, (130, 160))
 potato = pygame.transform.scale(p1, (130, 160))
@@ -61,12 +89,12 @@ potatorect = potato.get_rect()
 sunflowerrect = sunflower.get_rect()
 
 #card
-p1c = pygame.image.load('command work/imag/images/карты растений/p1c.png')
-p2c = pygame.image.load('command work/imag/images/карты растений/p2c.png')
-potatoc =pygame.image.load('command work/imag/images/карты растений/pc.png')
-sunflowerc = pygame.image.load('command work/imag/images/карты растений/sc.png')
-cherrycard = pygame.image.load('command work/imag/images/карты растений/cherrybombCard.png')
-jalapenocard = pygame.image.load('command work/imag/images/карты растений/jalapenoCard.png')
+p1c = pygame.image.load('imag/images/карты растений/p1c.png')
+p2c = pygame.image.load('imag/images/карты растений/p2c.png')
+potatoc =pygame.image.load('imag/images/карты растений/pc.png')
+sunflowerc = pygame.image.load('imag/images/карты растений/sc.png')
+cherrycard = pygame.image.load('imag/images/карты растений/cherrybombCard.png')
+jalapenocard = pygame.image.load('imag/images/карты растений/jalapenoCard.png')
 
 #size
 p1c = pygame.transform.scale(p1c, (200, 100))
@@ -114,7 +142,10 @@ counter = 10
 SPAWN_SUN = pygame.USEREVENT + 1
 print('SPAWN_SUN', SPAWN_SUN)
 
+DRAW_ZOMBIE = pygame.USEREVENT + 2
+
 pygame.time.set_timer(SPAWN_SUN, 10000)
+pygame.time.set_timer(DRAW_ZOMBIE, 150)
 
 shop = []
 
@@ -125,6 +156,12 @@ while runnig:
     for event in events:
         if event.type == pygame.QUIT:
             sys.exit()
+        if event.type == DRAW_ZOMBIE:
+            zombie = zimages[zombieindex]
+            zombieindex += 1
+
+            if zombieindex >= len(zimages):
+                zombieindex = 0
         if event.type == SPAWN_SUN:
             print('start sun event')
             while count_sun != 1:
@@ -158,6 +195,21 @@ while runnig:
 
         mainScreen.blit(sun, sunrect)
 
+    if count_z!=1:
+        zombierect.centerx = random.randint(1750, WIDTH)
+        zombierect.centery = random.randint(90, 790)
+        count_z += 1
+
+    if count_z == 1:
+        if zombierect.bottom >= WIDTH:
+            zombierect.bottom = WIDTH
+        else:
+            changeXz = 0+ SPEEDz
+            zombierect.x -= changeXz
+        mainScreen.blit(zombie, zombierect)
+
+    if zombierect.centerx <= 420:
+        count_z = 0
 
         
 
@@ -175,8 +227,8 @@ while runnig:
             card['card'].set_alpha(255)
         else:
             card['card'].set_alpha(100)
-        if card['rect'].collidepoint(event.pos) == True and score >= card['cost']:
-            mainScreen.blit(card['card'], card['rect'].set_alpha(100))
+        # if card['rect'].collidepoint(event.pos) == True and score >= card['cost']:
+        #     mainScreen.blit(card['card'], card['rect'].set_alpha(100))
 
 
         mainScreen.blit(card['card'], card['rect'])
