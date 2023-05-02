@@ -5,11 +5,29 @@ import pygame, sys
 import random
 import time
 import threading
+import sys
 pygame.init()
+# from tkinter import *
+# from tkinter import ttk
 
+# #window
+# root = Tk()
+# root.title("METANIT.COM")
+# root.geometry("250x200")
+
+# def click():
+#     window = Tk()
+#     window.title("Новое окно")
+#     window.geometry("250x200")
+ 
+# button = ttk.Button(text="Создать окно", command=click)
+# button.pack(anchor=CENTER, expand=1)
+ 
+# root.mainloop()
 
 # цвета
 BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
 changeX = 0
 changeY = 0
 SPEED = 1
@@ -23,7 +41,7 @@ HEIGHT = 1080
 mainScreen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 pygame.display.set_caption("Plants vs zombie")
 
-
+paused = False
 
 zombi1 = pygame.image.load('imag/images/визуальные эффекты/3.png')
 zombi2 = pygame.image.load('imag/images/визуальные эффекты/4.png')
@@ -46,25 +64,25 @@ zombi18 = pygame.image.load('imag/images/визуальные эффекты/20.
 zombi18 = pygame.image.load('imag/images/визуальные эффекты/21.png')
 
 
-zombi1 = pygame.transform.scale(zombi1, (250, 270))
-zombi2 = pygame.transform.scale(zombi2, (250, 270))
-zombi3 = pygame.transform.scale(zombi3, (250, 270))
-zombi4 = pygame.transform.scale(zombi4, (250, 270))
-zombi5 = pygame.transform.scale(zombi5, (250, 270))
-zombi6 = pygame.transform.scale(zombi6, (250, 270))
-zombi7 = pygame.transform.scale(zombi7, (250, 270))
-zombi8 = pygame.transform.scale(zombi8, (250, 270))
-zombi9 = pygame.transform.scale(zombi9, (250, 270))
-zombi10 = pygame.transform.scale(zombi10, (250, 270))
-zombi11 = pygame.transform.scale(zombi11, (250, 270))
-zombi12 = pygame.transform.scale(zombi12, (250, 270))
-zombi13 = pygame.transform.scale(zombi13, (250, 270))
-zombi14 = pygame.transform.scale(zombi14, (250, 270))
-zombi15 = pygame.transform.scale(zombi15, (250, 270))
-zombi16 = pygame.transform.scale(zombi16, (250, 270))
-zombi17 = pygame.transform.scale(zombi17, (250, 270))
-zombi18 = pygame.transform.scale(zombi18, (250, 270))
-zombi18 = pygame.transform.scale(zombi18, (250, 270))
+zombi1 = pygame.transform.scale(zombi1, (240, 240))
+zombi2 = pygame.transform.scale(zombi2, (240, 240))
+zombi3 = pygame.transform.scale(zombi3, (240, 240))
+zombi4 = pygame.transform.scale(zombi4, (240, 240))
+zombi5 = pygame.transform.scale(zombi5, (240, 240))
+zombi6 = pygame.transform.scale(zombi6, (240, 240))
+zombi7 = pygame.transform.scale(zombi7, (240, 240))
+zombi8 = pygame.transform.scale(zombi8, (240, 240))
+zombi9 = pygame.transform.scale(zombi9, (240, 240))
+zombi10 = pygame.transform.scale(zombi10, (240, 240))
+zombi11 = pygame.transform.scale(zombi11, (240, 240))
+zombi12 = pygame.transform.scale(zombi12, (240, 240))
+zombi13 = pygame.transform.scale(zombi13, (240, 240))
+zombi14 = pygame.transform.scale(zombi14, (240, 240))
+zombi15 = pygame.transform.scale(zombi15, (240, 240))
+zombi16 = pygame.transform.scale(zombi16, (240, 240))
+zombi17 = pygame.transform.scale(zombi17, (240, 240))
+zombi18 = pygame.transform.scale(zombi18, (240, 240))
+zombi18 = pygame.transform.scale(zombi18, (240, 240))
 
 zimages=[]
 zimages.append(zombi1)
@@ -162,7 +180,13 @@ cherrycardrect = cherrycard.get_rect(topleft = (0, 400))
 jalapenocardrect = jalapenocard.get_rect(topleft = (0, 500))
 
 alpha_cards = [
-    { 'card': p1c, 'rect': p1crect, 'cost': 100 }, 
+    { 
+        'card': p1c, 
+        'rect': p1crect, 
+        'cost': 100,
+        'plant': p1,
+        'plantrect': p1.get_rect(topleft = (p1crect.x, p1crect.y))
+    }, 
     { 'card': p2c, 'rect': p2crect, 'cost': 200 }, 
     { 'card': potatoc, 'rect': potatocrect, 'cost': 50 }, 
     { 'card': sunflowerc, 'rect': sunflowercrect, 'cost': 50 }, 
@@ -170,9 +194,13 @@ alpha_cards = [
     { 'card': jalapenocard, 'rect': jalapenocardrect, 'cost': 125 }
 ]
 
+clickedplant = None
+clickedplantrect = None
+
 #score
 score = 0
 q = pygame.font.SysFont('arial', 56)
+w =pygame.font.SysFont('bold', 200)
 
 # число кадров в секунду
 FPS = 60
@@ -189,7 +217,17 @@ DRAW_ZOMBIE = pygame.USEREVENT + 2
 pygame.time.set_timer(SPAWN_SUN, 10000)
 pygame.time.set_timer(DRAW_ZOMBIE, 150)
 
+pause = False
 shop = []
+paused = w.render("ПАУЗА", 1, GREEN)
+
+# def menu(SPEEDz, SPEED, changeX, changeXz, changeY):
+#     mainScreen.blit(paused, (1600, 0))
+#     SPEEDz = 0
+#     SPEED = 0
+#     changeX = 0
+#     changeXz = 0
+#     changeY = 0
 
 
 while runnig:
@@ -203,13 +241,15 @@ while runnig:
         if event.type == DRAW_ZOMBIE:
             zombie = zimages[zombieindex]
             zombieindex += 1
+
+        
         
             if zombieindex >= len(zimages):
                 zombieindex = 0
         if event.type == SPAWN_SUN:
             print('start sun event')
             while count_sun != 1:
-                sunrect.centerx = random.randint(100, WIDTH)
+                sunrect.centerx = random.randint(100, WIDTH)    
                 sunrect.centery = random.randint(0, 100)
                 count_sun += 1 
                 pygame.time.set_timer(SPAWN_SUN, 0)    
@@ -218,6 +258,23 @@ while runnig:
                 print("escape pressed")
                 pygame.quit()
                 running = False
+            if event.key == pygame.K_TAB:
+                mainScreen.blit(paused, (1600, 0))
+                SPEEDz = 0
+                SPEED = 0
+                changeX = 0
+                changeXz = 0
+                changeY = 0
+                pause = True
+            if pause == True:    
+                if event.key == pygame.K_TAB:
+                    mainScreen.blit(bg, (0, 0))
+                    SPEEDz = 1
+                    SPEED = 1
+                    changeX = 0
+                    changeXz = 0
+                    changeY = 0
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 print(sunrect.collidepoint(event.pos), 'gotcha or not')
@@ -225,8 +282,12 @@ while runnig:
                     score += 50
                     count_sun = 0
                     pygame.time.set_timer(SPAWN_SUN, 10000)
-                # if card['rect'].collide(event.pos) == True and score >= card['cost']:
-                    # mainScreen.blit(card['card'], card['rect'].set_alpha(100))    
+            
+            # if card['rect'].collide(event.pos) == True and score >= card['cost']:
+            #     mainScreen.blit(card['card'], card['rect'].set_alpha(100))    
+            #     clickedplant = 
+            
+
     print(shop)
     mainScreen.fill(BLACK)
     mainScreen.blit(bg, (0, 0))
@@ -256,14 +317,6 @@ while runnig:
 
     if zombierect.centerx <= 420:
         count_z = 0
-
-        
-
-    # if score >= 50:
-    #     if score >= 200:
-    #         for i in alpha_cards:
-    #             alpha_cards[i] = alpha_cards[i].set_alpha(255)
-
 
     clock.tick(60)
 
