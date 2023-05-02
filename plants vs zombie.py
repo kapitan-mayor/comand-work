@@ -24,26 +24,68 @@ mainScreen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 pygame.display.set_caption("Plants vs zombie")
 
 
+
+zombi1 = pygame.image.load('imag/images/визуальные эффекты/3.png')
+zombi2 = pygame.image.load('imag/images/визуальные эффекты/4.png')
+zombi3 = pygame.image.load('imag/images/визуальные эффекты/5.png')
+zombi4 = pygame.image.load('imag/images/визуальные эффекты/6.png')
+zombi5 = pygame.image.load('imag/images/визуальные эффекты/7.png')
+zombi6 = pygame.image.load('imag/images/визуальные эффекты/8.png')
+zombi7 = pygame.image.load('imag/images/визуальные эффекты/9.png')
+zombi8 = pygame.image.load('imag/images/визуальные эффекты/10.png')
+zombi9 = pygame.image.load('imag/images/визуальные эффекты/11.png')
+zombi10 = pygame.image.load('imag/images/визуальные эффекты/12.png')
+zombi11 = pygame.image.load('imag/images/визуальные эффекты/13.png')
+zombi12 = pygame.image.load('imag/images/визуальные эффекты/14.png')
+zombi13 = pygame.image.load('imag/images/визуальные эффекты/15.png')
+zombi14 = pygame.image.load('imag/images/визуальные эффекты/16.png')
+zombi15 = pygame.image.load('imag/images/визуальные эффекты/17.png')
+zombi16 = pygame.image.load('imag/images/визуальные эффекты/18.png')
+zombi17 = pygame.image.load('imag/images/визуальные эффекты/19.png')
+zombi18 = pygame.image.load('imag/images/визуальные эффекты/20.png')
+zombi18 = pygame.image.load('imag/images/визуальные эффекты/21.png')
+
+
+zombi1 = pygame.transform.scale(zombi1, (250, 270))
+zombi2 = pygame.transform.scale(zombi2, (250, 270))
+zombi3 = pygame.transform.scale(zombi3, (250, 270))
+zombi4 = pygame.transform.scale(zombi4, (250, 270))
+zombi5 = pygame.transform.scale(zombi5, (250, 270))
+zombi6 = pygame.transform.scale(zombi6, (250, 270))
+zombi7 = pygame.transform.scale(zombi7, (250, 270))
+zombi8 = pygame.transform.scale(zombi8, (250, 270))
+zombi9 = pygame.transform.scale(zombi9, (250, 270))
+zombi10 = pygame.transform.scale(zombi10, (250, 270))
+zombi11 = pygame.transform.scale(zombi11, (250, 270))
+zombi12 = pygame.transform.scale(zombi12, (250, 270))
+zombi13 = pygame.transform.scale(zombi13, (250, 270))
+zombi14 = pygame.transform.scale(zombi14, (250, 270))
+zombi15 = pygame.transform.scale(zombi15, (250, 270))
+zombi16 = pygame.transform.scale(zombi16, (250, 270))
+zombi17 = pygame.transform.scale(zombi17, (250, 270))
+zombi18 = pygame.transform.scale(zombi18, (250, 270))
+zombi18 = pygame.transform.scale(zombi18, (250, 270))
+
 zimages=[]
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/3.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/4.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/5.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/6.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/7.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/8.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/9.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/10.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/11.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/12.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/13.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/14.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/15.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/16.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/17.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/18.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/19.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/20.png'))
-zimages.append(pygame.image.load('imag/images/визуальные эффекты/21.png'))
+zimages.append(zombi1)
+zimages.append(zombi2)
+zimages.append(zombi3)
+zimages.append(zombi4)
+zimages.append(zombi5)
+zimages.append(zombi6)
+zimages.append(zombi7)
+zimages.append(zombi8)
+zimages.append(zombi9)
+zimages.append(zombi10)
+zimages.append(zombi11)
+zimages.append(zombi12)
+zimages.append(zombi13)
+zimages.append(zombi14)
+zimages.append(zombi15)
+zimages.append(zombi16)
+zimages.append(zombi17)
+zimages.append(zombi18)
+zimages.append(zombi18)
 
 zombieindex = 0 # кадр который рисуется из анимации (zimages)
 zombie = zimages[zombieindex]
@@ -156,10 +198,12 @@ while runnig:
     for event in events:
         if event.type == pygame.QUIT:
             sys.exit()
+        pos = pygame.mouse.get_pos()
+        
         if event.type == DRAW_ZOMBIE:
             zombie = zimages[zombieindex]
             zombieindex += 1
-
+        
             if zombieindex >= len(zimages):
                 zombieindex = 0
         if event.type == SPAWN_SUN:
@@ -181,6 +225,8 @@ while runnig:
                     score += 50
                     count_sun = 0
                     pygame.time.set_timer(SPAWN_SUN, 10000)
+                # if card['rect'].collide(event.pos) == True and score >= card['cost']:
+                    # mainScreen.blit(card['card'], card['rect'].set_alpha(100))    
     print(shop)
     mainScreen.fill(BLACK)
     mainScreen.blit(bg, (0, 0))
@@ -227,8 +273,7 @@ while runnig:
             card['card'].set_alpha(255)
         else:
             card['card'].set_alpha(100)
-        # if card['rect'].collidepoint(event.pos) == True and score >= card['cost']:
-        #     mainScreen.blit(card['card'], card['rect'].set_alpha(100))
+        
 
 
         mainScreen.blit(card['card'], card['rect'])
