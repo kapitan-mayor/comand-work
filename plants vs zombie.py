@@ -6,11 +6,103 @@ import random
 import time
 import threading
 import sys
+from pygame import *
+import pygame_menu
+from pygame_menu.examples import create_example_window
+from random import randrange
+from typing import Tuple, Any, Optional, List
+import pygame_menu
+from pygame_menu.examples import create_example_window
 pygame.init()
 # from tkinter import *
 # from tkinter import ttk
 
-# #window
+# # # #window
+# # Create the surface
+# surface = create_example_window('МЕНЮШКА', (400, 280))
+
+# # Create a custom theme
+# my_theme = pygame_menu.themes.THEME_DARK.copy()
+# my_theme.title = False  # Hide the menu title
+
+# menu = pygame_menu.Menu(
+#     height=280,  # Use full-screen
+#     theme=my_theme,
+#     title='',
+#     center_content=False,
+#     width=400
+# )
+
+# # Button options
+# b1 = menu.add.button(
+#     'ГЛАВНОЕ МЕНЮ',
+#     lambda: print(f'My method'),
+#     align=pygame_menu.locals.ALIGN_LEFT,
+#     float=True,
+#     selection_color='#fff'
+# )
+# b1.translate(70, 30)
+# b2 = menu.add.button(
+#     'ВЫХОД',
+#     pygame_menu.events.EXIT,
+#     align=pygame_menu.locals.ALIGN_LEFT,
+#     float=True,
+#     selection_color='#fff'
+# )
+# b2.translate(130, 200)
+
+# # b3 = menu.add.button(
+# #     'ПРОДОЛЖИТЬ'
+# #     pygame_menu.events.BACK,
+# #     align=pygame_menu.locals.ALIGN_LEFT,
+# #     float=True,
+# #     selection_color='#fff'
+# # )
+# # b3.translate(40, 235)
+
+
+
+# if __name__ == '__main__':
+#     menu.mainloop(surface)
+
+# size = (800, 600)
+# window = display.set_mode(size)
+# ARIAL_50 = font.SysFont('arial', 50)
+
+# class Menu:
+#     def __init__(self):
+#         self._option_surfaces = []
+#         self._callbacks = []
+#         self._current_option_index = 0
+
+#     def append_optons(self, option, callback):
+#         self._option_surfaces.append(ARIAL_50.render(option, 1, (255, 255, 255)))
+#         self._callbacks.append(callback)
+
+#         # 0 5 -> 6
+#         # 5
+#         # 5
+#         # 0 5 -> -1
+#         # -1
+#         # 0
+
+#     def switch(self, direction):
+#         self._current_option_index = max(0, min(self._current_option_index + direction, len(self._option_surfaces) - 1))
+
+#     def select(self):
+#         self._callbacks[self._current_option_index]()
+
+#     def draw(self, surf, x, y, option_y_padding):
+#         for i, option in enumerate(self._option_surfaces):
+#             option_rect = option.get_rect()
+#             option_rect.topleft = (x, y + i * option_y_padding)
+#             if i == self._current_option_index:
+#                 draw.rect(surf, (0, 100, 0), option_rect)
+#             surf.blit(option, option_rect)
+
+# menu = Menu()
+# menu.append_optons('Hello world!', lambda: print('Hello world!'))
+# menu.append_optons('Quit', quit)
 # root = Tk()
 # root.title("METANIT.COM")
 # root.geometry("250x200")
@@ -221,15 +313,6 @@ pause = False
 shop = []
 paused = w.render("ПАУЗА", 1, GREEN)
 
-# def menu(SPEEDz, SPEED, changeX, changeXz, changeY):
-#     mainScreen.blit(paused, (1600, 0))
-#     SPEEDz = 0
-#     SPEED = 0
-#     changeX = 0
-#     changeXz = 0
-#     changeY = 0
-
-
 while runnig:
     # проверяем события, которые произошли (если они были)
     events = pygame.event.get()
@@ -242,8 +325,6 @@ while runnig:
             zombie = zimages[zombieindex]
             zombieindex += 1
 
-        
-        
             if zombieindex >= len(zimages):
                 zombieindex = 0
         if event.type == SPAWN_SUN:
@@ -258,22 +339,6 @@ while runnig:
                 print("escape pressed")
                 pygame.quit()
                 running = False
-            if event.key == pygame.K_TAB:
-                mainScreen.blit(paused, (1600, 0))
-                SPEEDz = 0
-                SPEED = 0
-                changeX = 0
-                changeXz = 0
-                changeY = 0
-                pause = True
-            if pause == True:    
-                if event.key == pygame.K_TAB:
-                    mainScreen.blit(bg, (0, 0))
-                    SPEEDz = 1
-                    SPEED = 1
-                    changeX = 0
-                    changeXz = 0
-                    changeY = 0
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
